@@ -14,7 +14,7 @@ const LoginForm = () => {
     })
   }, [userId, password])
 
-  return (<Form onSubmit={onSubmitForm}>
+  return (<Form onSubmit={onSubmitForm} style={{padding: '20px'}}>
       <div>
         <label htmlFor="user-id">아이디</label>
         <br/>
@@ -25,7 +25,7 @@ const LoginForm = () => {
         <br/>
         <Input name="user-password" value={password} onChange={onChangePassword} required/>
       </div>
-      <div>
+      <div style={{marginTop: '20px'}}>
         <Button type="primary" htmlType="submit" loading={false}>로그인</Button>
         <Link href="/signup"><Button>Signup</Button></Link>
       </div>
