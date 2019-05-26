@@ -1,28 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PostForm from '../components/PostForm';
 import MainPost from '../components/MainPost';
-
-const dummy = {
-  isLoggedIn: true,
-  imagePaths: [],
-  mainPosts: [
-    {
-      User: {
-        id: 1,
-        nickname: 'Winnie the Pooh',
-      },
-      content: 'First Post',
-      img: 'https://static.posters.cz/image/750/plakatok/winnie-the-pooh-friends-i12468.jpg'
-    }
-  ],
-  createdAt: '2019-05-26'
-}
+import {useDispatch, useSelector} from 'react-redux';
+import {loginAction, logoutAction} from '../reducers/user';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const {isLoggedIn, user} = useSelector(state => state.user);
+  const { mainPosts } = useSelector(state => state.post);
+  
+  // useEffect(() => {
+  //   dispatch(loginAction);
+  // }, [])
+
+
   return (
     <div>
-      { dummy.isLoggedIn && <PostForm /> }
-      { dummy.mainPosts.map((c,idx) => <MainPost post={c} key={idx}/>) }
+      { user? <div>Login : {user.nickname}</div> : <div>Log out</div> }
+      { isLoggedIn && <PostForm /> }
+      { mainPosts.map((c,idx) => <MainPost post={c} key={idx}/>) }
     </div>
   )
 };

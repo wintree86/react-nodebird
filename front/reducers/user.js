@@ -1,19 +1,36 @@
-const initialState = {
-  isLoggedIn: false,
-  user: null
+const dummy = {
+  nickname: 'Ryan cho',
+  Post: [],
+  Followings: [],
+  Followers: [],
+  signUpData: null
 }
 
-const LOG_IN = 'LOG_IN'; // Action Name
-const LOG_OUT = 'LOG_OUT'; // Action Name
+const initialState = {
+  isLoggedIn: false,
+  user: null,
+}
 
-const loginAction = {
-  type: LOG_IN,
-  data: {
-    nickname: 'Ryan cho'
+export const LOG_IN = 'LOG_IN'; 
+export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS'; 
+export const LOG_IN_FAILURE = 'LOG_IN_SUCCESS'; 
+export const LOG_OUT = 'LOG_OUT';
+export const SIGN_UP = 'SIGN_UP';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS`';
+
+export const signUpAction = (data) => {
+  return {
+    type: SIGN_UP,
+    data
   }
 }
 
-const logoutAction = {
+export const loginAction = {
+  type: LOG_IN,
+  data: dummy
+}
+
+export const logoutAction = {
   type: LOG_OUT
 }
 
@@ -32,6 +49,12 @@ const reducer = (state= initialState, action) => {
         ...state,
         isLoggedIn: false,
         user: null
+      }
+    }
+    case SIGN_UP: {
+      return {
+        ...state,
+        signUpData: action.data
       }
     }
     default : {
