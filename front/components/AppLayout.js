@@ -1,15 +1,16 @@
 import React from 'react';
-import {Menu, Input, Row, Col, Card, Avatar } from "antd";
+import {Menu, Input, Row, Col } from "antd";
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import LoginForm from './LoginForm';
+import UserProfile from './UserProfile';
 
 const dummy = {
   nickname: 'Ryan cho',
   Post: [],
   Followings: [],
   Followers: [],
-  isLoggedIn: false
+  isLoggedIn: true
 }
 
 const AppLayout = ({children}) => {
@@ -24,21 +25,12 @@ const AppLayout = ({children}) => {
       </Menu>
       <Row gutter={24}>
         <Col xs={24} md={6}>
-          {dummy.isLoggedIn ? <Card
-            actions={[
-              <div key="twit">Twit<br/>{dummy.Post.length}</div>,
-              <div key="twit">Followings<br/>{dummy.Followings.length}</div>,
-              <div key="twit">Followers<br/>{dummy.Followers.length}</div>,
-            ]}
-          >
-            <Card.Meta 
-              avatar={<Avatar>{dummy.nickname[0]}</Avatar>}
-              title={dummy.nickname}
-            />
-          </Card> : <LoginForm/>}
+          {dummy.isLoggedIn ? <UserProfile/> : <LoginForm/>}
         </Col>
         <Col xs={24} md={12}>{children}</Col>
-        <Col xs={24} md={6}></Col>
+        <Col xs={24} md={6}>
+          <Link href="https://github.com/wintree86"><a target="_blank">Made by RyanCho</a></Link>
+        </Col>
       </Row>
     </div>
   )
