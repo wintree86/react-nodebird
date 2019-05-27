@@ -38,16 +38,15 @@ const PostForm = () => {
       </div> 
       <div>
         {
-          imagePaths.map((v,i) => {
-            return (
+          imagePaths.map((v,i) => (
               <div key={v} style={{display: 'inline-block'}}>
-                <img src={'http://localhost:3065/'+v} style={{width: '200px'}} alt={v} />
+                <img src={`http://localhost:3065/${v}`} style={{width: '200px'}} alt={v} />
                 <div>
                   <Button>Remove</Button>
                 </div>
               </div>
             )
-          })
+          )
         }
       </div>
     </Form>
