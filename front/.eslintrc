@@ -12,10 +12,13 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "react:recommended"
   ],
   "plugins": [
     "import",
     "react-hooks"
-  ]
+  ],
+  "rules": {
+    "no-underscore-dangle": "off"
+  }
 }

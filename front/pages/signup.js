@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from 'react'
 import {Form, Input, Checkbox, Button} from 'antd';
-import {useDispatch} from 'react-redux';
-import {signUpAction} from '../reducers/user';
+import {useDispatch, useSelector} from 'react-redux';
+import {SIGN_UP_REQUEST} from '../reducers/user';
 
 export const useInput = (initValue = null) => {
   const [value, setter] = useState(initValue);
@@ -13,6 +13,7 @@ export const useInput = (initValue = null) => {
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const {isSigningUp} = useSelector(state => state.user);
   const [passwordCheck, setPasswordCheck] = useState('');
   const [term, setTerm] = useState('');
   const [passwordError, setPasswordError] = useState(false);
@@ -31,9 +32,14 @@ const Signup = () => {
       return setTermError(true)
     }
     
-    dispatch(signUpAction({
-      id, nick, password
-    }))
+    dispatch({
+      type: SIGN_UP_REQUEST,
+      data: {
+        id,
+        password,
+        nick
+      }
+    })
 
   },[password, passwordCheck, term]);
 
@@ -74,7 +80,7 @@ const Signup = () => {
           {termError && <div style={{color: 'red'}}> 약관에 동의하셔야 합니다.</div>}
         </div>
         <div style={{marginTop: 10}}>
-          <Button type="primary" htmlType="submit">가입하기</Button>
+          <Button type="primary" htmlType="submit" loading={isSigningUp}>가입하기</Button>
         </div>
       </Form>
     </>
