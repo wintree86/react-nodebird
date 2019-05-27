@@ -1,6 +1,7 @@
 const initialState = {
   mainPosts: [
     {
+      id: 1,
       User: {
         id: 1,
         nickname: 'Winnie the Pooh',
@@ -10,9 +11,20 @@ const initialState = {
     }
   ], // 화면에 보일 포스트들
   imagePaths: [], // 미리보기 이미지 경로
-  addPostError: false, // 포스트 업로드 실패 사유
+  addPostErrorReason: '', // 포스트 업로드 실패 사유
   isAddingPost: false, // 포스트 업로드 중
+  addedPost: false // 포스트 업로드 성공
 };
+
+const dummyPost =
+  {
+    id: 2,
+    User: {
+      id: 2,
+      nickname: 'Piglet',
+    },
+    content: 'Dummy Post'
+  }
 
 export const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
 export const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
@@ -61,14 +73,22 @@ const reducer = (state = initialState, action) => {
     case ADD_POST_REQUEST:
       return {
         ...state,
+        isAddingPost: true,
+        addPostErrorReason: '',
+        addedPost: false
       };
     case ADD_POST_SUCCESS:
       return {
         ...state,
+        isAddingPost: false,
+        mainPosts: [dummyPost, ...state.mainPosts],
+        addedPost: true
       };
     case ADD_POST_FAILURE:
       return {
         ...state,
+        isAddingPost: false,
+        addPostErrorReason: action.error,
       };
     default : {
       return {
