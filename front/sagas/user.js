@@ -9,7 +9,7 @@ function* loginAPI() {
 function* login() {
   try {
     // yield call(loginAPI);
-    yield delay(2000);
+    yield delay(1000);
     yield put({
       type: LOG_IN_SUCCESS
     });
@@ -32,7 +32,7 @@ function* signUpAPI() {
 function* signUp() {
   try {
     // yield call(signUpAPI);
-    yield delay(2000);
+    yield delay(1000);
     yield put({
       type: SIGN_UP_SUCCESS
     })

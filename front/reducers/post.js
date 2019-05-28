@@ -7,13 +7,17 @@ const initialState = {
         nickname: 'Winnie the Pooh',
       },
       content: 'First Post',
-      img: 'https://static.posters.cz/image/750/plakatok/winnie-the-pooh-friends-i12468.jpg'
+      img: 'https://static.posters.cz/image/750/plakatok/winnie-the-pooh-friends-i12468.jpg',
+      Comments: []
     }
   ], // 화면에 보일 포스트들
   imagePaths: [], // 미리보기 이미지 경로
   addPostErrorReason: '', // 포스트 업로드 실패 사유
   isAddingPost: false, // 포스트 업로드 중
-  addedPost: false // 포스트 업로드 성공
+  addedPost: false, // 포스트 업로드 성공,
+  isAddingComment: false, // 코멘트 등록 중
+  addCommentErrorReason: '', // 코멘트 등록 실해 사유
+  addedComment: false // 코멘트 등록 성공
 };
 
 const dummyPost =
@@ -23,8 +27,19 @@ const dummyPost =
       id: 2,
       nickname: 'Piglet',
     },
-    content: 'Dummy Post'
+    content: 'Dummy Post',
+    Comments: []
   }
+
+const dummyComment = {
+  id: 1,
+  User: {
+    id: 1, 
+    nickname: 'Piglet'
+  },
+  createdAt: '2019-05-29',
+  content: `Get off Tiger! don't take my pooh`
+}
 
 export const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
 export const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
@@ -89,6 +104,32 @@ const reducer = (state = initialState, action) => {
         ...state,
         isAddingPost: false,
         addPostErrorReason: action.error,
+      };
+    case ADD_COMMENT_REQUEST:
+        return {
+          ...state,
+          isAddingComment: true,
+          addCommentErrorReason: '',
+          addedComment: false
+        };
+    case ADD_COMMENT_SUCCESS:
+      const postIndex = state.mainPosts.findIndex(v => v.id === action.data.postId);
+      const post = state.mainPosts[postIndex];
+      const Comments = [...post.Comments, dummyComment];
+      const mainPosts = [...state.mainPosts];
+      mainPosts[postIndex] = { ...post, Comments };
+        
+      return {
+        ...state,
+        isAddingComment: false,
+        mainPosts,
+        addedComment: true
+      };
+    case ADD_COMMENT_FAILURE:
+      return {
+        ...state,
+        isAddingComment: false,
+        addCommentErrorReason: action.error,
       };
     default : {
       return {
